@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mixality — User & Market Research Study</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0c0c0f;
+      --bg-elevated: #151518;
+      --bg-card: #1a1a1f;
+      --text: #e8e6e3;
+      --text-muted: #8a8a8e;
+      --text-dim: #5a5a5e;
+      --accent: #6c63ff;
+      --accent-glow: rgba(108, 99, 255, 0.15);
+      --accent-secondary: #3ecf8e;
+      --accent-warm: #f59e0b;
+      --border: #2a2a2f;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max-width: 1100px;
+      /* Phase colors */
+      --phase-produce: #6c63ff;
+      --phase-record: #4f46e5;
+      --phase-mix: #3ecf8e;
+      --phase-master: #22c55e;
+      /* Section backgrounds derived from phase colors */
+      --bg-landscape: #0f1024;
+      --bg-audience: #0c1418;
+      --bg-reveal: #0e1a16;
+      --bg-capabilities: #0c1612;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; }
+    h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -0.03em; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); letter-spacing: -0.02em; }
+    h3 { font-size: 1.25rem; letter-spacing: -0.01em; }
+    p { max-width: 680px; }
+
+    /* ===== LAYOUT ===== */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-heading {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-body {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .section-body p + p {
+      margin-top: 1.25rem;
+    }
+
+    /* ===== HERO / INTRO ===== */
+    .intro-wrapper {
+      position: relative;
+      height: 250vh;
+      background: #ffffff;
+    }
+
+    .intro-fixed {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .intro-fixed .container {
+      max-width: 800px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .intro-title {
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #111;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-subtitle {
+      color: #666;
+      font-size: 1.1rem;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* Floating rectangles */
+    .floating-rect {
+      position: absolute;
+      border-radius: 20px;
+      opacity: 0.15;
+      z-index: 1;
+      animation: floatDrift linear infinite;
+    }
+
+    @keyframes floatDrift {
+      0% { transform: translateX(-8%) translateY(0) rotate(0deg); }
+      25% { transform: translateX(6%) translateY(-5%) rotate(3deg); }
+      50% { transform: translateX(12%) translateY(2%) rotate(-2deg); }
+      75% { transform: translateX(-4%) translateY(6%) rotate(2deg); }
+      100% { transform: translateX(-8%) translateY(0) rotate(0deg); }
+    }
+
+    /* Gradient overlay that fades white to black — controlled by JS scroll */
+    .intro-gradient-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+      transition: opacity 0.1s linear;
+    }
+
+    /* ===== PROBLEM SECTION — GRADIENT BACKGROUND ===== */
+    #problem {
+      background: linear-gradient(
+        180deg,
+        var(--bg) 0%,
+        rgba(108, 99, 255, 0.06) 15%,
+        rgba(79, 70, 229, 0.08) 35%,
+        rgba(74, 111, 255, 0.07) 55%,
+        rgba(62, 207, 142, 0.06) 75%,
+        rgba(34, 197, 94, 0.04) 90%,
+        var(--bg) 100%
+      );
+      padding-bottom: 8rem;
+    }
+
+    .problem-block {
+      margin-top: 3rem;
+    }
+
+    .problem-block-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .problem-block h3 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .problem-block p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 800px;
+    }
+
+    /* ===== DIAGRAM: WORKFLOW COMPARISON ===== */
+    .diagram-daw-workflow {
+      margin-top: 3rem;
+      padding: 2.5rem;
+      background: rgba(26, 26, 31, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .problem-diagram-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .problem-diagram-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Traditional workflow bar */
+    .workflow-bar-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .workflow-bar {
+      position: relative;
+      border-radius: 8px;
+      overflow: visible;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Traditional bar — cycling highlight */
+    .workflow-bar.traditional {
+      display: flex;
+      height: 60px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .workflow-bar.traditional .phase {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      border-right: 2px solid var(--bg-card);
+      overflow: hidden;
+      white-space: nowrap;
+      transition: all 1s ease;
+      filter: brightness(0.7);
+    }
+
+    .workflow-bar.traditional .phase.highlight {
+      filter: brightness(1.2);
+      color: #fff;
+    }
+
+    .workflow-bar.traditional .phase.produce { background: var(--phase-produce); flex: 3; }
+    .workflow-bar.traditional .phase.record { background: var(--phase-record); flex: 2; }
+    .workflow-bar.traditional .phase.mix { background: var(--phase-mix); flex: 3; }
+    .workflow-bar.traditional .phase.master {
+      background: var(--phase-master);
+      flex: 1;
+      border-right: none;
+    }
+
+    /* Modern DAW workflow bar — rotating gradient border */
+    .daw-border-wrapper {
+      position: relative;
+      border-radius: 11px;
+      padding: 2px;
+      background: var(--border);
+      margin-bottom: 0.5rem;
+    }
+
+    .daw-border-wrapper.animated {
+      background: conic-gradient(
+        from var(--border-angle, 0deg),
+        var(--phase-produce),
+        var(--phase-record),
+        var(--phase-mix),
+        var(--phase-master),
+        var(--phase-produce)
+      );
+      animation: rotateBorder 4s linear infinite;
+    }
+
+    @property --border-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes rotateBorder {
+      to { --border-angle: 360deg; }
+    }
+
+    .workflow-bar.daw {
+      height: 80px;
+      background: #1a1a1f;
+      border-radius: 9px;
+      display: flex;
+      align-items: stretch;
+      padding: 8px 6px;
+      gap: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .daw-fader {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .daw-fader-track {
+      width: 2px;
+      height: 100%;
+      background: #333;
+      position: relative;
+      border-radius: 1px;
+    }
+
+    .daw-fader-thumb {
+      position: absolute;
+      width: 10px;
+      height: 6px;
+      background: #666;
+      border-radius: 1px;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      transition: bottom 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .daw-workflow-caption {
+      text-align: center;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .workflow-question {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* (confetti removed) */
+
+    /* ===== COMPARISON: FADER VS. SPATIAL ===== */
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 2rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .comparison-row { grid-template-columns: 1fr; }
+      .comparison-arrow { display: none; }
+    }
+
+    .comparison-panel {
+      background: rgba(26, 26, 31, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .comparison-panel h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+    }
+
+    .comparison-arrow {
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+
+    /* Fader mockup */
+    .fader-strip {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .fader-channel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 36px;
+    }
+
+    .fader-track {
+      width: 4px;
+      height: 80px;
+      background: #333;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .fader-thumb {
+      position: absolute;
+      width: 16px;
+      height: 8px;
+      background: #666;
+      border-radius: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .fader-label {
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .knob {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #555;
+      position: relative;
+    }
+
+    .knob::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 6px;
+      background: #888;
+      top: 2px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-30deg);
+      transform-origin: bottom center;
+    }
+
+    /* ===== SPATIAL CANVAS MOCKUP (used in comparison and reveal) ===== */
+    .spatial-canvas {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: #1e1e24;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spatial-canvas.large {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .spatial-canvas .canvas-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .spatial-canvas .canvas-body {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .spatial-canvas.large .canvas-body {
+      top: 38px;
+    }
+
+    /* Speaker cones */
+    .speaker {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .speaker::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+    }
+
+    .speaker.left { left: 8px; }
+    .speaker.right { right: 8px; }
+
+    /* Sound objects — positioned spatially */
+    .sobj {
+      position: absolute;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Kick — centered, large, bottom */
+    .sobj.kick {
+      background: rgba(244, 63, 94, 0.18);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      width: 22%;
+      height: 22%;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Vocals — wide, centered, middle */
+    .sobj.vocals {
+      background: rgba(99, 102, 241, 0.22);
+      border: 1px solid rgba(99, 102, 241, 0.45);
+      width: 28%;
+      height: 18%;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Hi-hat — long thin, lower opacity, above/behind vocals */
+    .sobj.hihat {
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      width: 32%;
+      height: 8%;
+      top: 14%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Guitar — left of center, larger, lower opacity */
+    .sobj.guitar {
+      background: rgba(52, 211, 153, 0.14);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      width: 18%;
+      height: 20%;
+      top: 38%;
+      left: 14%;
+    }
+
+    /* Keys — right of center, symmetrical with guitar */
+    .sobj.keys {
+      background: rgba(168, 85, 247, 0.14);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      width: 18%;
+      height: 20%;
+      top: 38%;
+      right: 14%;
+    }
+
+    .canvas-axis-label {
+      position: absolute;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .canvas-axis-label.left-label { left: 52px; top: 50%; transform: translateY(-50%); }
+    .canvas-axis-label.right-label { right: 52px; top: 50%; transform: translateY(-50%); }
+    .canvas-axis-label.top-label { top: 6px; left: 50%; transform: translateX(-50%); }
+    .canvas-axis-label.bottom-label { bottom: 6px; left: 50%; transform: translateX(-50%); }
+
+    .spatial-canvas.large .canvas-axis-label.top-label { top: 44px; }
+
+    /* ===== TRANSLATION GAP DIAGRAM — CAROUSEL ===== */
+    .translation-gap {
+      margin-top: 3rem;
+      padding: 2.5rem;
+      background: rgba(26, 26, 31, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    /* translation gap uses shared .problem-diagram-label and .problem-diagram-title */
+
+    .gap-carousel {
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr;
+      gap: 0;
+      min-height: 220px;
+    }
+
+    .gap-left {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .gap-left-header {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+      color: var(--accent);
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.75rem;
+      text-align: right;
+      padding-right: 1.5rem;
+    }
+
+    .gap-prompts {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .gap-prompt {
+      padding: 0.7rem 1.5rem 0.7rem 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      font-style: italic;
+      text-align: right;
+      border-radius: 6px;
+      transition: all 0.5s ease;
+      border: 1px solid transparent;
+    }
+
+    .gap-prompt.active {
+      color: var(--text);
+      background: rgba(108, 99, 255, 0.08);
+      border-color: var(--accent);
+    }
+
+    .gap-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--text-dim);
+    }
+
+    .gap-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gap-right-header {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+      color: var(--text-dim);
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.75rem;
+      padding-left: 1.5rem;
+    }
+
+    .gap-daw-display {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    /* DAW controls in the gap diagram */
+    .gap-fader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gap-fader-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    .gap-fader-track-v {
+      width: 5px;
+      height: 120px;
+      background: #333;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .gap-fader-thumb-v {
+      position: absolute;
+      width: 22px;
+      height: 10px;
+      background: #777;
+      border-radius: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 50%;
+      transition: bottom 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+
+    .gap-controls-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 2rem;
+    }
+
+    .gap-knob-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gap-knob {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #555;
+      position: relative;
+      background: #222;
+    }
+
+    .gap-knob-indicator {
+      position: absolute;
+      width: 2px;
+      height: 13px;
+      background: #aaa;
+      top: 5px;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translateX(-50%) rotate(0deg);
+      transition: transform 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+
+    .gap-value-label {
+      font-size: 0.7rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      color: #888;
+      min-width: 70px;
+      text-align: center;
+      transition: opacity 0.3s ease;
+    }
+
+    .translation-question {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .workflow-description {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Course connection hover reveal */
+    .course-connection-trigger {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: default;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-top: 1rem;
+      float: right;
+      transition: border-color 0.3s ease, color 0.3s ease;
+      z-index: 50;
+    }
+
+    .course-connection-trigger:hover {
+      border-color: var(--accent);
+      color: var(--text-muted);
+    }
+
+    .course-connection-trigger .cc-icon {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .course-connection-popup {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      right: 0;
+      width: 320px;
+      padding: 1rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.5;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .course-connection-popup::after {
+      content: '';
+      position: absolute;
+      top: -6px;
+      right: 20px;
+      width: 10px;
+      height: 10px;
+      background: var(--bg-card);
+      border-left: 1px solid var(--accent);
+      border-top: 1px solid var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .course-connection-trigger:hover .course-connection-popup {
+      display: block;
+    }
+
+    /* ===== LANDSCAPE SECTION ===== */
+    #landscape {
+      background: var(--bg-landscape);
+    }
+
+    .landscape-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .landscape-tier {
+      margin-top: 2.5rem;
+    }
+
+    .landscape-tier-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .landscape-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .landscape-card.full-width .card-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .landscape-card.full-width .card-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .daw-screenshots {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .daw-screenshot-img {
+      flex: 1;
+      min-width: 0;
+      max-width: 50%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #333;
+    }
+
+    .landscape-card {
+      background: rgba(26, 26, 31, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .landscape-card .card-category {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .landscape-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .landscape-card .card-products {
+      font-size: 0.85rem;
+      color: var(--accent-secondary);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .landscape-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: none;
+    }
+
+    .landscape-card .card-gap {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--accent-warm);
+      font-weight: 500;
+    }
+
+    /* ===== GAP / POSITIONING DIAGRAM ===== */
+    .gap-diagram {
+      margin-top: 3rem;
+      padding: 3rem;
+      background: rgba(26, 26, 31, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .gap-diagram .diagram-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+    }
+
+    .positioning-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      max-width: 600px;
+      margin: 0 auto;
+      aspect-ratio: 1;
+      background: var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .quadrant {
+      background: rgba(26, 26, 31, 0.9);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .quadrant-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    .quadrant-products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+
+    .quadrant-products span {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .quadrant.empty {
+      background: var(--accent-glow);
+    }
+
+    .quadrant.empty .quadrant-label {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .axis-labels {
+      display: flex;
+      justify-content: space-between;
+      max-width: 600px;
+      margin: 0.75rem auto 0;
+    }
+
+    .axis-label-x {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    /* ===== AUDIENCE SECTION ===== */
+    #audience {
+      background: var(--bg-audience);
+    }
+
+    .audience-profile {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .audience-profile { grid-template-columns: 1fr; }
+    }
+
+    .audience-description {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .audience-description p + p {
+      margin-top: 1.25rem;
+    }
+
+    .audience-pain-points {
+      background: rgba(26, 26, 31, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .audience-pain-points h3 {
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      color: var(--accent-warm);
+    }
+
+    .pain-point {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .pain-point:last-child { border-bottom: none; }
+
+    /* ===== MIXALITY REVEAL SECTION ===== */
+    #mixality {
+      background: var(--bg-reveal);
+      text-align: center;
+    }
+
+    #mixality .container {
+      max-width: 800px;
+    }
+
+    .mixality-name {
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 50%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 2rem;
+    }
+
+    .elevator-pitch {
+      font-size: 1.25rem;
+      color: var(--text);
+      line-height: 1.6;
+      max-width: 640px;
+      margin: 0 auto 3rem;
+    }
+
+    .thesis-box {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      border: 1px solid var(--accent);
+      border-radius: 99px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+
+    .canvas-mockup {
+      margin-top: 4rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ===== CAPABILITIES SECTION ===== */
+    #capabilities {
+      background: var(--bg-capabilities);
+    }
+
+    .capabilities-list {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .capability {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 2rem;
+      padding: 2.5rem;
+      background: rgba(26, 26, 31, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .capability { grid-template-columns: 1fr; }
+    }
+
+    .capability-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .capability-content h3 {
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+    }
+
+    .capability-content p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: none;
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    #features {
+      background: #0e1610;
+    }
+
+    .features-grid {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      padding: 1.75rem;
+      background: rgba(26, 26, 31, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: none;
+    }
+
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .feature-tag {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 99px;
+      border: 1px solid;
+    }
+
+    .feature-tag.cap1 { color: #6c63ff; border-color: rgba(108, 99, 255, 0.3); }
+    .feature-tag.cap2 { color: #3ecf8e; border-color: rgba(62, 207, 142, 0.3); }
+    .feature-tag.cap3 { color: #f59e0b; border-color: rgba(245, 158, 11, 0.3); }
+    .feature-tag.cap4 { color: #a78bfa; border-color: rgba(167, 139, 250, 0.3); }
+    .feature-tag.cap5 { color: #f472b6; border-color: rgba(244, 114, 182, 0.3); }
+
+    /* ===== ENGAGEMENT SECTION ===== */
+    #engagement {
+      background: #101812;
+    }
+
+    .engagement-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .engagement-columns { grid-template-columns: 1fr; }
+    }
+
+    .engagement-column h3 {
+      margin-bottom: 1.25rem;
+      font-size: 1.1rem;
+    }
+
+    .engagement-column ul {
+      list-style: none;
+    }
+
+    .engagement-column li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .engagement-column li:last-child { border-bottom: none; }
+
+    /* ===== COURSE CONNECTIONS SECTION ===== */
+    #connections {
+      background: #0c140e;
+    }
+
+    .connections-list {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .connection {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .connection:last-child { border-bottom: none; }
+
+    @media (max-width: 768px) {
+      .connection { grid-template-columns: 1fr; }
+    }
+
+    .connection-concept {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--accent);
+    }
+
+    .connection-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== REFERENCES SECTION ===== */
+    #references {
+      background: var(--bg);
+    }
+
+    .references-list {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .reference {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding-left: 2rem;
+      text-indent: -2rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    footer p + p {
+      margin-top: 0.5rem;
+    }
+
+    /* ===== MEDIA PLACEHOLDERS ===== */
+    .media-placeholder {
+      margin: 2rem 0;
+      padding: 3rem 2rem;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    .media-placeholder .placeholder-title {
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== INTRO ===== -->
+  <div class="intro-wrapper" id="intro-wrapper">
+    <div class="intro-fixed" id="intro-fixed">
+      <!-- Floating rectangles — large, overlapping -->
+      <div class="floating-rect" id="fr-0" style="width: 450px; height: 300px; background: #6c63ff; top: 5%; left: -8%; animation-duration: 18s;"></div>
+      <div class="floating-rect" id="fr-1" style="width: 380px; height: 500px; background: #3ecf8e; top: 10%; right: -10%; animation-duration: 22s; animation-delay: -4s;"></div>
+      <div class="floating-rect" id="fr-2" style="width: 520px; height: 320px; background: #f59e0b; bottom: 5%; left: 5%; animation-duration: 20s; animation-delay: -8s;"></div>
+      <div class="floating-rect" id="fr-3" style="width: 400px; height: 400px; background: #4f46e5; top: -5%; right: 15%; animation-duration: 25s; animation-delay: -12s;"></div>
+      <div class="floating-rect" id="fr-4" style="width: 480px; height: 280px; background: #a78bfa; bottom: 15%; right: -5%; animation-duration: 16s; animation-delay: -6s;"></div>
+      <div class="floating-rect" id="fr-5" style="width: 350px; height: 420px; background: #22c55e; top: 20%; left: 20%; animation-duration: 23s; animation-delay: -10s;"></div>
+      <div class="floating-rect" id="fr-6" style="width: 440px; height: 260px; background: #f472b6; top: -10%; left: 30%; animation-duration: 19s; animation-delay: -3s;"></div>
+      <div class="floating-rect" id="fr-7" style="width: 360px; height: 350px; background: #818cf8; bottom: -5%; left: 45%; animation-duration: 21s; animation-delay: -7s;"></div>
+
+      <!-- Gradient overlay — opacity controlled by scroll -->
+      <div class="intro-gradient-overlay" id="intro-gradient"></div>
+
+      <div class="container">
+        <div class="intro-title">Mixality</div>
+        <p class="intro-subtitle">A user and market research study for a spatial (music) mixing environment.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== THE PROBLEM ===== -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-label">The Problem</div>
+      <h2 class="section-heading">Two barriers between producers and professional mixes</h2>
+      <div class="section-body">
+        <p>Modern DAWs provide an all-inclusive environment for production, recording, mixing, and mastering. But this continuity creates a blurry creative process where producers never clearly transition from building a song to shaping its sound. The result: unfinished tracks, underdeveloped mixes, and a generation of producers who can write music but can't articulate why their mixes don't sound professional.</p>
+      </div>
+
+      <!-- PROBLEM 1 -->
+      <div class="problem-block">
+        <div class="problem-block-label">Problem 1</div>
+        <h3>Blurred Boundaries</h3>
+        <p>Producing and mixing are fundamentally different creative phases that engage different cognitive processes. But no tool, no ceremony, and no process tells a producer when to stop building a song and start shaping its sound. The DAW provides no structure for this transition &mdash; so producers stay in a permanent state of producing, and the mix never gets its own attention.</p>
+      </div>
+
+      <!-- Phase Delineation diagram -->
+      <div class="diagram-daw-workflow">
+        <div class="problem-diagram-title">Phase Delineation</div>
+
+        <div class="workflow-bar-label">Traditional studio workflow</div>
+        <div class="workflow-bar traditional" id="traditional-bar">
+          <div class="phase produce">Produce</div>
+          <div class="phase record">Record</div>
+          <div class="phase mix">Mix</div>
+          <div class="phase master">Master</div>
+        </div>
+        <div class="workflow-description">Each stage has its own tools, environment, and criteria for completion. The transition between them is deliberate.</div>
+
+        <div class="workflow-bar-label">Modern DAW workflow</div>
+        <div class="daw-border-wrapper" id="daw-border-wrapper">
+          <div class="workflow-bar daw" id="daw-bar"></div>
+        </div>
+        <div class="workflow-description">Every tool is available at every moment. The boundaries between stages dissolve into a continuous, undifferentiated workspace.</div>
+
+        <div class="workflow-question">When does production end and mixing begin?</div>
+
+      </div>
+
+      <!-- Course connection — outside the diagram container so it's not clipped -->
+      <div style="text-align: right; position: relative; z-index: 50; margin-top: -0.5rem;">
+        <div class="course-connection-trigger">
+          <span class="cc-icon">i</span>
+          Course connection
+          <div class="course-connection-popup" style="bottom: auto; top: calc(100% + 8px);">The traditional workflow resembles a waterfall methodology &mdash; sequential phases with clear handoffs. The modern DAW collapsed this into overlapping, agile-like phases. Both have merit; the question is whether the boundaries disappeared intentionally or by default.<span class="cc-popup-arrow-top"></span></div>
+        </div>
+      </div>
+
+      <!-- PROBLEM 2 -->
+      <div class="problem-block">
+        <div class="problem-block-label">Problem 2</div>
+        <h3>Analog Conventions in a Digital World</h3>
+        <p>Mixing interfaces are built on analog console metaphors &mdash; faders, knobs, channel strips &mdash; designed for engineers with physical muscle memory on real hardware. These designs earned their place in the analog domain. But a generation of digital-native producers now learns mixing through metaphors that weren't designed for them. The digital domain offers far richer possibilities for visualization and spatial interaction &mdash; possibilities that mixing interfaces haven't evolved to explore.</p>
+      </div>
+
+      <!-- Translation Gap diagram -->
+      <div class="translation-gap" id="translation-gap">
+        <div class="problem-diagram-title">The Translation Gap</div>
+        <div class="gap-carousel">
+          <div class="gap-left">
+            <div class="gap-left-header">What the producer thinks</div>
+            <div class="gap-prompts" id="gap-prompts">
+              <div class="gap-prompt active" data-index="0">&ldquo;I want the vocal up front and centered&rdquo;</div>
+              <div class="gap-prompt" data-index="1">&ldquo;The guitars feel too wide&rdquo;</div>
+              <div class="gap-prompt" data-index="2">&ldquo;The kick is buried under everything&rdquo;</div>
+              <div class="gap-prompt" data-index="3">&ldquo;Everything sounds muddy in the middle&rdquo;</div>
+              <div class="gap-prompt" data-index="4">&ldquo;The snare needs more snap&rdquo;</div>
+            </div>
+          </div>
+          <div class="gap-center">&rarr;</div>
+          <div class="gap-right">
+            <div class="gap-right-header">What the DAW shows</div>
+            <div class="gap-daw-display">
+              <div class="gap-controls-row">
+                <div class="gap-fader-container">
+                  <div class="gap-fader-label" id="gap-fader-name">Level</div>
+                  <div class="gap-fader-track-v">
+                    <div class="gap-fader-thumb-v" id="gap-fader"></div>
+                  </div>
+                  <div class="gap-value-label" id="gap-fader-value">-2.4 dB</div>
+                </div>
+                <div class="gap-knob-container">
+                  <div class="gap-fader-label" id="gap-knob-name">Pan</div>
+                  <div class="gap-knob">
+                    <div class="gap-knob-indicator" id="gap-knob"></div>
+                  </div>
+                  <div class="gap-value-label" id="gap-knob-value">C</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="translation-question">The producer's mental model is spatial and relational. The DAW's controls are parametric and isolated.</div>
+      </div>
+
+      <!-- Synthesis: what these problems converge into -->
+      <div class="problem-block" style="margin-top: 4rem;">
+        <div class="problem-block-label">The Proposition</div>
+        <h3>A different kind of mixing environment</h3>
+        <p>These two problems converge: producers need a workflow that separates mixing from production as a distinct creative act, and they need an interface that speaks their language &mdash; spatial, visual, relational &mdash; rather than translating through analog conventions they never learned. What emerges is a mixing environment where position replaces parameters, and the act of entering the environment is itself the transition from producing to mixing.</p>
+      </div>
+
+      <div class="comparison-row">
+        <div class="comparison-panel">
+          <h4>Traditional mixer interface</h4>
+          <div class="fader-strip">
+            <div class="fader-channel">
+              <div class="knob"></div>
+              <div class="fader-track"><div class="fader-thumb" style="top: 25%;"></div></div>
+              <div class="fader-label">Vox</div>
+            </div>
+            <div class="fader-channel">
+              <div class="knob"></div>
+              <div class="fader-track"><div class="fader-thumb" style="top: 40%;"></div></div>
+              <div class="fader-label">Gtr</div>
+            </div>
+            <div class="fader-channel">
+              <div class="knob"></div>
+              <div class="fader-track"><div class="fader-thumb" style="top: 55%;"></div></div>
+              <div class="fader-label">Kick</div>
+            </div>
+            <div class="fader-channel">
+              <div class="knob"></div>
+              <div class="fader-track"><div class="fader-thumb" style="top: 30%;"></div></div>
+              <div class="fader-label">Keys</div>
+            </div>
+            <div class="fader-channel">
+              <div class="knob"></div>
+              <div class="fader-track"><div class="fader-thumb" style="top: 20%;"></div></div>
+              <div class="fader-label">HH</div>
+            </div>
+            <div class="fader-channel">
+              <div class="knob"></div>
+              <div class="fader-track"><div class="fader-thumb" style="top: 45%;"></div></div>
+              <div class="fader-label">Snr</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comparison-arrow">&rarr;</div>
+
+        <div class="comparison-panel">
+          <h4>Spatial mix environment</h4>
+          <div class="spatial-canvas">
+            <div class="canvas-body">
+              <div class="speaker left"></div>
+              <div class="speaker right"></div>
+              <div class="sobj vocals">Vocals</div>
+              <div class="sobj kick">Kick</div>
+              <div class="sobj hihat">Hi-Hat</div>
+              <div class="sobj guitar">Guitar</div>
+              <div class="sobj keys">Keys</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== TARGET AUDIENCE ===== -->
+  <section id="audience">
+    <div class="container">
+      <div class="section-label">Target Audience</div>
+      <h2 class="section-heading">Who has this problem</h2>
+
+      <div class="audience-profile">
+        <div class="audience-description">
+          <p><strong>Independent producers</strong> who work in DAWs like Ableton Live, Logic Pro, and FL Studio. They write, arrange, and produce their own music &mdash; and then mix it themselves, not because they're trained to, but because the tool doesn't distinguish between producing and mixing.</p>
+          <p>They have ear-level intuition: they can hear when something is wrong with a mix, but they can't always articulate what it is or how to fix it. They've never touched an analog mixing console. They learned production in a digital-first environment and absorbed mixing concepts through trial and error, YouTube tutorials, and the built-in presets of their DAW.</p>
+          <p>They know their productions could sound more polished, more spacious, more clear. They just don't have the conceptual framework or the dedicated workflow to get there.</p>
+          <p style="margin-top: 2rem; color: var(--text-dim); font-size: 0.9rem;"><strong>Secondary audience (aspirational):</strong> Mix engineers who want a more intuitive spatial interface &mdash; but whose adoption is harder because they already speak the language of existing tools.</p>
+        </div>
+
+        <div class="audience-pain-points">
+          <h3>Pain Points</h3>
+          <div class="pain-point">Can't finish tracks &mdash; production and mixing blur together endlessly</div>
+          <div class="pain-point">Mixing tools are modeled after analog hardware they've never used</div>
+          <div class="pain-point">Learn by trial and error with no structured feedback</div>
+          <div class="pain-point">Overwhelmed by plugin choices that distract from fundamentals</div>
+          <div class="pain-point">Can hear problems but can't diagnose or articulate them</div>
+        </div>
+      </div>
+
+      <div class="audience-profile" style="margin-top: 3rem;">
+        <div class="audience-description">
+          <h2 class="section-heading">Why they would care</h2>
+          <p>These producers have grown accustomed to a language of sound that is spatial and image-driven. They talk about placing the vocal &ldquo;up front,&rdquo; pushing the reverb &ldquo;behind&rdquo; the drums, keeping the bass &ldquo;centered.&rdquo; Their mental model is a space, not a spreadsheet of parameters. But the tools they use don't reflect that language back to them.</p>
+          <p>They need the chance to engage with fundamentals &mdash; level, pan, EQ, compression &mdash; in a space that relates those concepts to the mental models they already carry. A mixing environment where hearing a problem means seeing the problem, and diagnosing it is a matter of moving things in space rather than decoding parameter values. They don't need more plugins. They need a different frame.</p>
+        </div>
+
+        <div class="audience-pain-points">
+          <h3 style="color: var(--accent-secondary);">What it solves</h3>
+          <div class="pain-point">A dedicated mixing space that creates a clear boundary between producing and mixing</div>
+          <div class="pain-point">Visual feedback that makes spatial relationships between sounds legible &mdash; hearing problems becomes seeing them</div>
+          <div class="pain-point">A focused toolkit built on fundamentals, not an endless plugin marketplace</div>
+          <div class="pain-point">Learning through interaction &mdash; mixing concepts emerge from the interface, not from tutorials</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== INTRODUCING MIXALITY ===== -->
+  <section id="mixality">
+    <div class="container">
+      <div class="section-label">The Solution</div>
+      <div class="mixality-name">Mixality</div>
+      <p class="elevator-pitch">A spatial mixing environment that separates mixing from production, visualizes the stereo field as a 2D canvas where position has meaning, and teaches mixing concepts through interaction rather than instruction.</p>
+      <div class="thesis-box">Write on instruments. Mix in space.</div>
+
+      <div class="canvas-mockup">
+        <div class="spatial-canvas large">
+          <div class="canvas-header">
+            <span>Mixality Canvas</span>
+            <span>Untitled Session</span>
+          </div>
+          <div class="canvas-body">
+            <div class="speaker left"></div>
+            <div class="speaker right"></div>
+            <div class="sobj vocals">Vocals</div>
+            <div class="sobj kick">Kick</div>
+            <div class="sobj hihat">Hi-Hat</div>
+            <div class="sobj guitar">Guitar</div>
+            <div class="sobj keys">Keys</div>
+            <span class="canvas-axis-label left-label">L</span>
+            <span class="canvas-axis-label right-label">R</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CAPABILITY AREAS ===== -->
+  <section id="capabilities">
+    <div class="container">
+      <div class="section-label">Capability Areas</div>
+      <h2 class="section-heading">Five pillars of the Mixality experience</h2>
+      <div class="section-body">
+        <p>Each capability area addresses a distinct dimension of the mixing experience &mdash; from the core spatial interaction to the community that forms around it.</p>
+      </div>
+
+      <div class="capabilities-list">
+        <div class="capability">
+          <div class="capability-number">01</div>
+          <div class="capability-content">
+            <h3>Spatial Mix Environment</h3>
+            <p>The 2D canvas where position has meaning. Tracks are represented as objects within a visual stereo field &mdash; speakers on left and right, the space between them as the mix. Pan, depth, and frequency relationships are communicated spatially rather than through isolated numeric parameters. This is the core interaction surface: what you see is how it sounds.</p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability-number">02</div>
+          <div class="capability-content">
+            <h3>Sound Shaping Tools</h3>
+            <p>EQ, compression, level, and pan &mdash; presented through spatial and visual metaphors rather than analog skeuomorphs. The premise: the vast majority of a mix can be executed with these four fundamentals. Mixality offers a focused, opinionated toolkit that emphasizes mastery of core concepts over proliferation of specialized plugins.</p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability-number">03</div>
+          <div class="capability-content">
+            <h3>Mix Education &amp; Diagnostics</h3>
+            <p>Learning through doing. Diagnostic tools surface problems spatially &mdash; where does the mix concentrate the most energy? Which objects are competing for the same space? The visual language is the education: mixing concepts become visible because the interface makes relationships between sounds legible. This is not a course bolted onto a tool. The feedback is the product.</p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability-number">04</div>
+          <div class="capability-content">
+            <h3>Timeline &amp; Automation</h3>
+            <p>The canvas exists over time. Sound objects move, parameters shift, and the spatial arrangement evolves across a song's structure. Automation is keyframe-based, drawing from video editing paradigms rather than DAW automation lanes &mdash; because a mix is a composition in space and time, not a sequence of static parameter values.</p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability-number">05</div>
+          <div class="capability-content">
+            <h3>Community &amp; Shared Canvases</h3>
+            <p>Users share their spatial mix canvases as visual artifacts &mdash; representations of mix decisions that others can study, learn from, or use as structural templates. Stem challenges let the community offer different mixes of the same source material, emphasizing that mixing is craft, not formula. Explore the mix practices of your favorite genres and learn from the engineers who shaped them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KEY FEATURES ===== -->
+  <section id="features">
+    <div class="container">
+      <div class="section-label">Key Features</div>
+      <h2 class="section-heading">How these capabilities come to life</h2>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>Session Management &amp; Integration</h3>
+          <p>Import stems and session data from existing DAW projects. The act of bringing audio into Mixality is itself the transition &mdash; a declaration that production is complete and mixing has begun.</p>
+          <div class="feature-tags"><span class="feature-tag cap1">01 Spatial Environment</span></div>
+        </div>
+
+        <div class="feature-card">
+          <h3>Analytical Visuals</h3>
+          <p>Built-in visual feedback &mdash; spectral displays, energy distribution, frequency overlap indicators &mdash; integrated directly into the spatial canvas rather than isolated in separate analysis windows.</p>
+          <div class="feature-tags"><span class="feature-tag cap1">01 Spatial Environment</span><span class="feature-tag cap3">03 Education &amp; Diagnostics</span></div>
+        </div>
+
+        <div class="feature-card">
+          <h3>Object Layering</h3>
+          <p>Visual representation of bus and summing structures. See what passes through where, understand signal flow through spatial relationships rather than abstract routing diagrams.</p>
+          <div class="feature-tags"><span class="feature-tag cap1">01 Spatial Environment</span><span class="feature-tag cap2">02 Sound Shaping</span></div>
+        </div>
+
+        <div class="feature-card">
+          <h3>Visual Language System</h3>
+          <p>Color, opacity, and shape differentiate sound objects from processing zones. A deliberate visual grammar that communicates relationships honestly &mdash; without false boundaries or oversimplified representations.</p>
+          <div class="feature-tags"><span class="feature-tag cap1">01 Spatial Environment</span><span class="feature-tag cap3">03 Education &amp; Diagnostics</span></div>
+        </div>
+
+        <div class="feature-card">
+          <h3>Keyframe Automation</h3>
+          <p>Parameter changes over time, with canvas states that evolve across song sections. Inspired by video editing timelines &mdash; because a mix is a spatial composition that moves.</p>
+          <div class="feature-tags"><span class="feature-tag cap4">04 Timeline &amp; Automation</span></div>
+        </div>
+
+        <div class="feature-card">
+          <h3>Consolidated Workspace Views</h3>
+          <p>Essential spaces &mdash; canvas view, timeline, track detail &mdash; clearly defined and purposefully organized. Each view serves a distinct stage of the mixing process, avoiding the multi-window sprawl of traditional DAWs.</p>
+          <div class="feature-tags"><span class="feature-tag cap1">01 Spatial Environment</span><span class="feature-tag cap4">04 Timeline &amp; Automation</span></div>
+        </div>
+
+        <div class="feature-card">
+          <h3>Template System</h3>
+          <p>Shareable mix structures that capture spatial arrangements as starting points. Community-contributed templates encode mixing knowledge as spatial patterns rather than written instructions.</p>
+          <div class="feature-tags"><span class="feature-tag cap5">05 Community</span></div>
+        </div>
+
+        <div class="feature-card">
+          <h3>Stem Challenges</h3>
+          <p>Community-driven mixing exercises where users receive the same set of stems and submit their own spatial mixes. Compare approaches, discover different interpretations of the same material, and learn from how others use the fundamentals.</p>
+          <div class="feature-tags"><span class="feature-tag cap5">05 Community</span><span class="feature-tag cap3">03 Education &amp; Diagnostics</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARKET LANDSCAPE ===== -->
+  <section id="landscape">
+    <div class="container">
+      <div class="section-label">Market Landscape</div>
+      <h2 class="section-heading">What exists today &mdash; and where the gap is</h2>
+      <div class="section-body">
+        <p>The digital audio workstation is the backbone of every producer's ecosystem. Everything else &mdash; plugins, spatial tools, educational platforms &mdash; orbits around it. No major commercial product has attempted to reimagine the mixing interface as a spatial environment, despite academic research validating the approach.</p>
+      </div>
+
+      <!-- TIER 1: DAWs — full width -->
+      <div class="landscape-tier">
+        <div class="landscape-tier-label">The Ecosystem</div>
+        <div class="landscape-grid">
+          <div class="landscape-card full-width">
+            <div class="card-content">
+              <div>
+                <div class="card-category">Digital Audio Workstations</div>
+                <h3>The Incumbents</h3>
+                <div class="card-products">Ableton Live, Logic Pro, FL Studio, Pro Tools, Studio One</div>
+                <p>All-in-one environments that handle production, recording, mixing, and mastering in a single continuous workspace. Mixing interfaces rely on analog console metaphors &mdash; faders, knobs, channel strips. No structural separation between creative phases. The producer's entire workflow lives here, and every other tool in this landscape is either a plugin within the DAW or a peripheral service alongside it.</p>
+                <div class="card-gap">Gap: No transition structure. Analog interface conventions. Everything in one undifferentiated space.</div>
+              </div>
+              <div>
+                <div class="daw-screenshots">
+                  <img src="media/Ableton-Live-12-30-2.webp" alt="Ableton Live interface" class="daw-screenshot-img">
+                  <img src="media/AppleLogic105_01-qY4zjBQWOT3Hpop1buvbWXGG__C4bB3Z.jpg" alt="Logic Pro interface" class="daw-screenshot-img">
+                </div>
+                <div class="daw-screenshots" style="margin-top: 0.5rem;">
+                  <img src="media/ImageLineFLStudio_01-0Vt4jhBuvrz7buTkhQz_hL4PcAfH_Zul.jpg" alt="FL Studio interface" class="daw-screenshot-img">
+                  <img src="media/05v5MW8F8aDttwMvgDF172N-37.jpg" alt="Pro Tools interface" class="daw-screenshot-img">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 2: Spatial + Mixing-focused alternatives -->
+      <div class="landscape-tier">
+        <div class="landscape-tier-label">Alternative Mixing Approaches</div>
+        <div class="landscape-grid">
+          <div class="landscape-card">
+            <div class="card-category">Spatial Mixing Tools</div>
+            <h3>Closest Competitor</h3>
+            <div class="card-products">iZotope Visual Mixer</div>
+            <p>Presents tracks as movable pucks on a 2D canvas controlling pan, gain, and stereo width. The closest existing product to spatial mixing &mdash; but limited to three parameters with no processing, no EQ visualization, and no educational component. Requires iZotope's proprietary inter-plugin communication on every track.</p>
+            <div class="card-gap">Gap: No processing. No education. Parameter-limited.</div>
+          </div>
+
+          <div class="landscape-card">
+            <div class="card-category">Mixing-Focused DAW</div>
+            <h3>Console Emulation</h3>
+            <div class="card-products">Harrison Mixbus</div>
+            <p>The only commercial DAW that explicitly separates mixing as a workflow stage with a dedicated mix page. Built by Harrison, with 50+ years of console manufacturing. But it still relies on analog console emulation and traditional channel strip metaphors &mdash; the transition is structural, not interfacial.</p>
+            <div class="card-gap">Gap: Transition-aware, but still analog metaphors.</div>
+          </div>
+
+          <div class="landscape-card">
+            <div class="card-category">Immersive Audio</div>
+            <h3>3D Positioning Tools</h3>
+            <div class="card-products">dearVR Spatial Connect, Neumann VIS, Audiocube</div>
+            <p>Tools for positioning audio objects in 3D space for surround and Atmos delivery formats. These demonstrate that spatial interaction for audio has commercial viability &mdash; but they solve a different problem: immersive format delivery, not stereo mixing or mixing education.</p>
+            <div class="card-gap">Gap: Spatial format delivery, not stereo mixing.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 3: Education + Automated -->
+      <div class="landscape-tier">
+        <div class="landscape-tier-label">Education &amp; Automation</div>
+        <div class="landscape-grid">
+          <div class="landscape-card">
+            <div class="card-category">Automated Mixing</div>
+            <h3>AI-Driven Tools</h3>
+            <div class="card-products">LANDR, RoEx Automix, iZotope Ozone</div>
+            <p>Automated processing from stems or stereo files. Useful for quick results but operate as black boxes &mdash; the user doesn't learn why decisions were made or how to make them independently. The mix is done for you, not by you.</p>
+            <div class="card-gap">Gap: No learning. No user agency.</div>
+          </div>
+
+          <div class="landscape-card">
+            <div class="card-category">Mixing Education</div>
+            <h3>Ear Training Platforms</h3>
+            <div class="card-products">SoundGym, TrainYourEars</div>
+            <p>Gamified ear training that teaches frequency identification, compression detection, and spatial awareness in isolation. Producers develop technical ears but never apply those skills in a mixing context &mdash; the gap between identification and application remains.</p>
+            <div class="card-gap">Gap: Teach identification, not application.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mixality Gap Coverage Diagram -->
+      <div class="gap-diagram" style="padding: 2.5rem 1.5rem;">
+        <div class="problem-diagram-title" style="text-align: center; margin-bottom: 0.5rem;">What Mixality Covers</div>
+        <p style="text-align: center; font-size: 0.85rem; color: var(--text-dim); margin: 0 auto 2.5rem; max-width: 560px;">No existing product addresses these gaps together. Mixality is built at their intersection.</p>
+
+        <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 800px; margin: 0 auto; display: block;" font-family="Inter, -apple-system, sans-serif">
+
+          <!-- ===== MIXALITY ROOT ===== -->
+          <rect x="280" y="20" width="240" height="65" rx="12" fill="rgba(108, 99, 255, 0.08)" stroke="#6c63ff" stroke-width="2" />
+          <text x="400" y="48" text-anchor="middle" fill="#e8e6e3" font-size="16" font-weight="700">Mixality</text>
+          <text x="400" y="67" text-anchor="middle" fill="#8a8a8e" font-size="9">Spatial mixing environment</text>
+
+          <!-- ===== LEVEL 1: Two core gaps addressed ===== -->
+          <line x1="340" y1="85" x2="200" y2="130" stroke="#6c63ff" stroke-width="1.5" opacity="0.5" />
+          <line x1="460" y1="85" x2="600" y2="130" stroke="#6c63ff" stroke-width="1.5" opacity="0.5" />
+
+          <!-- Gap 1: Phase Delineation -->
+          <rect x="100" y="130" width="200" height="50" rx="8" fill="rgba(108, 99, 255, 0.06)" stroke="#6c63ff" stroke-width="1" />
+          <text x="200" y="152" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="600">Phase Delineation</text>
+          <text x="200" y="170" text-anchor="middle" fill="#5a5a5e" font-size="8">Separating production from mixing</text>
+
+          <!-- Gap 2: Intuitive Interface -->
+          <rect x="500" y="130" width="200" height="50" rx="8" fill="rgba(108, 99, 255, 0.06)" stroke="#6c63ff" stroke-width="1" />
+          <text x="600" y="152" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="600">Intuitive Interface</text>
+          <text x="600" y="170" text-anchor="middle" fill="#5a5a5e" font-size="8">Spatial metaphors over analog conventions</text>
+
+          <!-- ===== LEVEL 2: What each gap enables ===== -->
+
+          <!-- From Phase Delineation -->
+          <line x1="150" y1="180" x2="110" y2="220" stroke="#3ecf8e" stroke-width="1" opacity="0.5" />
+          <line x1="250" y1="180" x2="290" y2="220" stroke="#3ecf8e" stroke-width="1" opacity="0.5" />
+
+          <rect x="40" y="220" width="145" height="40" rx="6" fill="rgba(62, 207, 142, 0.08)" stroke="#3ecf8e" stroke-width="1" />
+          <text x="112" y="238" text-anchor="middle" fill="#3ecf8e" font-size="8" font-weight="600">Intentional Transition</text>
+          <text x="112" y="252" text-anchor="middle" fill="#5a5a5e" font-size="7">Stems in = mixing begins</text>
+
+          <rect x="215" y="220" width="145" height="40" rx="6" fill="rgba(62, 207, 142, 0.08)" stroke="#3ecf8e" stroke-width="1" />
+          <text x="287" y="238" text-anchor="middle" fill="#3ecf8e" font-size="8" font-weight="600">Focused Toolkit</text>
+          <text x="287" y="252" text-anchor="middle" fill="#5a5a5e" font-size="7">Level, pan, EQ, compression</text>
+
+          <!-- From Intuitive Interface -->
+          <line x1="550" y1="180" x2="510" y2="220" stroke="#3ecf8e" stroke-width="1" opacity="0.5" />
+          <line x1="650" y1="180" x2="690" y2="220" stroke="#3ecf8e" stroke-width="1" opacity="0.5" />
+
+          <rect x="440" y="220" width="145" height="40" rx="6" fill="rgba(62, 207, 142, 0.08)" stroke="#3ecf8e" stroke-width="1" />
+          <text x="512" y="238" text-anchor="middle" fill="#3ecf8e" font-size="8" font-weight="600">Spatial Canvas</text>
+          <text x="512" y="252" text-anchor="middle" fill="#5a5a5e" font-size="7">Position = mix parameters</text>
+
+          <rect x="615" y="220" width="145" height="40" rx="6" fill="rgba(62, 207, 142, 0.08)" stroke="#3ecf8e" stroke-width="1" />
+          <text x="687" y="238" text-anchor="middle" fill="#3ecf8e" font-size="8" font-weight="600">Visual Feedback</text>
+          <text x="687" y="252" text-anchor="middle" fill="#5a5a5e" font-size="7">See the mix, not just hear it</text>
+
+          <!-- ===== LEVEL 3: Emergent property — Learning ===== -->
+          <!-- Converging lines from all four Level 2 nodes -->
+          <line x1="112" y1="260" x2="340" y2="315" stroke="#f59e0b" stroke-width="1" opacity="0.3" />
+          <line x1="287" y1="260" x2="370" y2="315" stroke="#f59e0b" stroke-width="1" opacity="0.3" />
+          <line x1="512" y1="260" x2="430" y2="315" stroke="#f59e0b" stroke-width="1" opacity="0.3" />
+          <line x1="687" y1="260" x2="460" y2="315" stroke="#f59e0b" stroke-width="1" opacity="0.3" />
+
+          <rect x="300" y="315" width="200" height="45" rx="8" fill="rgba(245, 158, 11, 0.08)" stroke="#f59e0b" stroke-width="1" />
+          <text x="400" y="335" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="600">Learning Through Doing</text>
+          <text x="400" y="351" text-anchor="middle" fill="#5a5a5e" font-size="8">Mixing education emerges from the interface</text>
+
+          <!-- ===== LEVEL 4: Community ===== -->
+          <line x1="400" y1="360" x2="400" y2="385" stroke="#2a2a2f" stroke-width="1" />
+          <rect x="295" y="385" width="210" height="30" rx="6" fill="rgba(62, 207, 142, 0.04)" stroke="#2a2a2f" stroke-width="1" />
+          <text x="400" y="404" text-anchor="middle" fill="#5a5a5e" font-size="8">Community &amp; Shared Canvases</text>
+
+        </svg>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== ENGAGEMENT ===== -->
+  <section id="engagement">
+    <div class="container">
+      <div class="section-label">Engagement</div>
+      <h2 class="section-heading">How Mixality connects with its audience</h2>
+
+      <div class="engagement-columns">
+        <div class="engagement-column">
+          <h3>How we reach producers</h3>
+          <ul>
+            <li>Producers live on YouTube, Reddit, Discord, and TikTok production communities &mdash; Mixality's spatial canvases are inherently visual and shareable</li>
+            <li>Stem challenges: provide source stems, invite the community to submit spatial mixes &mdash; emphasizing fundamentals and creative interpretation over plugin selection</li>
+            <li>Community-contributed templates and mix archetypes serve as discovery vectors and entry points for new users</li>
+            <li>Short-form content demonstrating the spatial canvas in action &mdash; the visual nature of the product makes it natively suited to social platforms</li>
+          </ul>
+        </div>
+
+        <div class="engagement-column">
+          <h3>How producers want to engage</h3>
+          <ul>
+            <li>Learn by doing &mdash; not by watching tutorials or reading manuals, but by manipulating a mix and hearing immediate results</li>
+            <li>Compare approaches &mdash; how did someone else mix the same song? What spatial decisions did they make and why?</li>
+            <li>Build on existing skills &mdash; Mixality should work alongside their current tools, not demand they abandon their setup</li>
+            <li>Template-oriented and workflow-driven &mdash; producers gravitate toward reusable patterns, presets, and streamlined processes that reduce friction and decision fatigue</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== COURSE CONNECTIONS ===== -->
+  <section id="connections">
+    <div class="container">
+      <div class="section-label">Conceptual Foundations</div>
+      <h2 class="section-heading">Connecting to course frameworks</h2>
+      <div class="section-body" style="margin-bottom: 1rem;">
+        <p>Mixality's design rationale draws on frameworks from the course material and broader design thinking literature.</p>
+      </div>
+
+      <div class="connections-list">
+        <div class="connection">
+          <div class="connection-concept">Design Thinking &amp; Empathy</div>
+          <div class="connection-text">Mixality begins from the Empathize phase: understanding why independent producers struggle to finish tracks and can't bridge the gap between production and a polished mix. The product concept emerged from sitting with these pain points, not from a technology-first approach.</div>
+        </div>
+
+        <div class="connection">
+          <div class="connection-concept">User-Centric Design</div>
+          <div class="connection-text">The interface is designed around how digital-native producers think about sound &mdash; spatially, visually, positionally &mdash; rather than how engineers historically controlled sound through analog console faders. The user's mental model drives the interaction paradigm.</div>
+        </div>
+
+        <div class="connection">
+          <div class="connection-concept">Takeuchi &amp; Nonaka (1986)</div>
+          <div class="connection-text">The traditional studio workflow &mdash; produce, record, mix, master &mdash; resembles a waterfall methodology: sequential phases with clear handoffs. Modern DAWs collapsed this into something closer to agile's overlapping phases. Mixality doesn't prescribe either approach; it simply observes that the music production pipeline may benefit from some structural delineation as a mechanism for project completion. The parallel to course frameworks is interesting but incidental &mdash; Mixality is a process product, not a process philosophy.</div>
+        </div>
+
+        <div class="connection">
+          <div class="connection-concept">Skeuomorphism Research</div>
+          <div class="connection-text">Academic work on the evolution of music production interfaces (ARP Journal, NYU MusEDLab) documents the generational obsolescence of analog console metaphors in digital environments. Mixality responds to this research by proposing a native-digital interaction paradigm grounded in spatial relationships.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REFERENCES ===== -->
+  <section id="references">
+    <div class="container">
+      <div class="section-label">References</div>
+      <h2 class="section-heading">Sources</h2>
+
+      <div class="references-list">
+        <div class="reference">Gelineck, S. &amp; Serafin, S. (2014). &ldquo;Stage Metaphor Mixing on a Multi-Touch Tablet Device.&rdquo; <em>Proceedings of the AES Convention</em>. Aalborg University.</div>
+        <div class="reference">Hein, E. (2016). &ldquo;The Great Music Interface Metaphor Shift.&rdquo; <em>NYU MusEDLab</em>.</div>
+        <div class="reference">iZotope. (2023). &ldquo;Mixing While Producing Music: Good or Bad Idea?&rdquo; <em>iZotope Learn</em>.</div>
+        <div class="reference">Kjeldskov, J. &amp; Paay, J. (2020). &ldquo;Spatial Mixer: Cross-Device Interaction for Music Mixing.&rdquo; <em>Proceedings of ACM OzCHI &rsquo;20</em>.</div>
+        <div class="reference">Lefford, N. &amp; Bromham, G. (2021). &ldquo;Beyond Skeuomorphism: The Evolution of Music Production Software User Interface Metaphors.&rdquo; <em>Journal on the Art of Record Production</em>.</div>
+        <div class="reference">Takeuchi, H. &amp; Nonaka, I. (1986). &ldquo;The New New Product Development Game.&rdquo; <em>Harvard Business Review</em>, Jan-Feb 1986, pp. 137&ndash;146.</div>
+        <div class="reference">Walzer, D. A. (2013). &ldquo;Towards a More Flexible and Creative Music Mixing Interface.&rdquo; <em>CHI &rsquo;13 Extended Abstracts on Human Factors in Computing Systems</em>. ACM.</div>
+        <div class="reference">Anthropic. (2025). Claude [Large language model]. https://www.anthropic.com</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AI USAGE ===== -->
+  <section id="ai-usage" style="background: var(--bg);">
+    <div class="container">
+      <div class="section-label">AI Usage Disclosure</div>
+      <h2 class="section-heading">How AI was used in this assignment</h2>
+      <div class="section-body" style="margin-bottom: 2rem;">
+        <p>Claude (Anthropic) was used in a primarily developmental capacity throughout this assignment: assisting in the creation of visual assets, structuring the HTML/CSS, and advising on the narrative flow of the pitch. All product decisions, design direction, problem framing, and domain expertise were student-directed.</p>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <th style="text-align: left; padding: 0.75rem 1rem; color: var(--text-muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;">Item</th>
+              <th style="text-align: left; padding: 0.75rem 1rem; color: var(--text-muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;">Role</th>
+              <th style="text-align: left; padding: 0.75rem 1rem; color: var(--text-muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.75rem 1rem; color: var(--text);">Product idea selection</td>
+              <td style="padding: 0.75rem 1rem; color: var(--accent);">Student-directed</td>
+              <td style="padding: 0.75rem 1rem; color: var(--text-muted);">Student chose scene-based mixing concept over alternative options; articulated problem statement and core vision</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.75rem 1rem; color: var(--text);">Problem statement &amp; narrative structure</td>
+              <td style="padding: 0.75rem 1rem; color: var(--accent);">Student-directed</td>
+              <td style="padding: 0.75rem 1rem; color: var(--text-muted);">Student articulated core problems, determined narrative arc, and directed all structural decisions; Claude assisted with language refinement</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.75rem 1rem; color: var(--text);">Market research</td>
+              <td style="padding: 0.75rem 1rem; color: var(--accent-warm);">Collaboratively developed</td>
+              <td style="padding: 0.75rem 1rem; color: var(--text-muted);">Student identified key competitors and landscape categories; Claude conducted web research to expand and verify</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.75rem 1rem; color: var(--text);">Capability areas &amp; features</td>
+              <td style="padding: 0.75rem 1rem; color: var(--accent-warm);">Collaboratively developed</td>
+              <td style="padding: 0.75rem 1rem; color: var(--text-muted);">Iterative dialogue to define capability areas and distinguish them from features; student directed all scope decisions</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.75rem 1rem; color: var(--text);">Web page implementation</td>
+              <td style="padding: 0.75rem 1rem; color: var(--accent-secondary);">Claude-implemented</td>
+              <td style="padding: 0.75rem 1rem; color: var(--text-muted);">Claude built HTML/CSS/JS structure, diagrams, animations, and visual assets from student direction and iterative feedback</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.75rem 1rem; color: var(--text);">Design direction</td>
+              <td style="padding: 0.75rem 1rem; color: var(--accent);">Student-directed</td>
+              <td style="padding: 0.75rem 1rem; color: var(--text-muted);">All visual design decisions, diagram concepts, interaction ideas, and naming choices made by student</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--text-dim);">Citation: Anthropic. (2025). Claude [Large language model]. https://www.anthropic.com</p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container" style="text-align: center;">
+      <p style="max-width: none; margin: 0 auto;">MET CS 634 &mdash; Agile Software Development &mdash; Assignment 1: User &amp; Market Research Study</p>
+      <p style="max-width: none; margin: 0.5rem auto 0;">Gregory Gold &mdash; Boston University Metropolitan College &mdash; Spring 2026</p>
+      <p style="max-width: none; margin: 1rem auto 0; font-size: 0.75rem;">Visual development assisted by Claude (Anthropic). Full AI usage log available upon request.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Generate DAW fader channels =====
+    (function() {
+      const dawBar = document.getElementById('daw-bar');
+      const sliderCount = 20;
+      // Pre-determined random positions (percentage from bottom, 15-85 range)
+      const positions = [62, 28, 75, 41, 53, 19, 68, 35, 81, 47, 23, 72, 56, 38, 64, 29, 78, 44, 60, 33];
+
+      for (let i = 0; i < sliderCount; i++) {
+        const fader = document.createElement('div');
+        fader.className = 'daw-fader';
+
+        const track = document.createElement('div');
+        track.className = 'daw-fader-track';
+
+        const thumb = document.createElement('div');
+        thumb.className = 'daw-fader-thumb';
+        thumb.dataset.target = positions[i];
+
+        track.appendChild(thumb);
+        fader.appendChild(track);
+        dawBar.appendChild(fader);
+      }
+    })();
+
+    // ===== Intro scroll effect: rects float up, then gradient to black =====
+    (function() {
+      const wrapper = document.getElementById('intro-wrapper');
+      const rects = document.querySelectorAll('.floating-rect');
+      const gradient = document.getElementById('intro-gradient');
+
+      window.addEventListener('scroll', () => {
+        if (!wrapper) return;
+        const wrapperTop = wrapper.offsetTop;
+        const wrapperHeight = wrapper.offsetHeight;
+        const scrolled = window.scrollY - wrapperTop;
+        const progress = Math.max(0, Math.min(1, scrolled / (wrapperHeight - window.innerHeight)));
+
+        // Phase 1 (0-0.5): rectangles float upward and fade out
+        const rectProgress = Math.min(1, progress * 2);
+        rects.forEach((rect, i) => {
+          const speed = 1 + (i % 3) * 0.3;
+          const yOffset = -rectProgress * 120 * speed;
+          const fadeOut = 1 - rectProgress;
+          rect.style.marginTop = yOffset + 'px';
+          rect.style.opacity = 0.15 * fadeOut;
+        });
+
+        // Phase 2 (0.5-1): gradient overlay fades in (white to black)
+        const gradientProgress = Math.max(0, (progress - 0.5) * 2);
+        gradient.style.opacity = gradientProgress;
+      });
+    })();
+
+    // ===== Traditional bar: cycling highlight =====
+    (function() {
+      const phases = document.querySelectorAll('#traditional-bar .phase');
+      let current = 0;
+
+      function cycleHighlight() {
+        phases.forEach(p => p.classList.remove('highlight'));
+        phases[current].classList.add('highlight');
+        current = (current + 1) % phases.length;
+      }
+
+      cycleHighlight();
+      setInterval(cycleHighlight, 2000);
+    })();
+
+    // ===== DAW bar: set initial positions and start animations =====
+    (function() {
+      const dawWrapper = document.getElementById('daw-border-wrapper');
+      const thumbs = document.querySelectorAll('.daw-fader-thumb');
+
+      // Set initial positions immediately
+      thumbs.forEach((thumb) => {
+        thumb.style.bottom = thumb.dataset.target + '%';
+      });
+
+      // Start the rotating gradient border
+      dawWrapper.classList.add('animated');
+
+      // Continuous random movement: every 1.5s, move 2-3 random faders
+      setInterval(() => {
+        const count = 2 + Math.floor(Math.random() * 2);
+        for (let j = 0; j < count; j++) {
+          const idx = Math.floor(Math.random() * thumbs.length);
+          const newPos = 10 + Math.floor(Math.random() * 75);
+          thumbs[idx].style.transition = 'bottom 0.8s cubic-bezier(0.34, 1.2, 0.64, 1)';
+          thumbs[idx].style.bottom = newPos + '%';
+        }
+      }, 1500);
+    })();
+
+    // ===== Translation gap carousel =====
+    (function() {
+      const prompts = document.querySelectorAll('.gap-prompt');
+      const fader = document.getElementById('gap-fader');
+      const knob = document.getElementById('gap-knob');
+      const faderValue = document.getElementById('gap-fader-value');
+      const knobValue = document.getElementById('gap-knob-value');
+
+      // Data: fader pos (%), knob rotation (deg), fader label text, knob label text,
+      //        fader control name, knob control name
+      const states = [
+        { fader: 72, knob: 0,    fLabel: '-2.4 dB',  kLabel: 'C',      fName: 'Level', kName: 'Pan' },     // vocal up front centered
+        { fader: 50, knob: -45,  fLabel: '-6.0 dB',  kLabel: 'L: -35', fName: 'Level', kName: 'Pan' },     // guitars too wide
+        { fader: 85, knob: 0,    fLabel: '+3.1 dB',  kLabel: 'C',      fName: 'Gain',  kName: 'Pan' },     // kick buried
+        { fader: 35, knob: 25,   fLabel: '-4.2 dB @ 320Hz',  kLabel: 'Q: 1.4', fName: 'EQ Band 3', kName: 'Bandwidth' }, // muddy middle
+        { fader: 65, knob: 60,   fLabel: '12 ms',    kLabel: '4:1',    fName: 'Attack', kName: 'Ratio' },  // snare snap
+      ];
+
+      let current = 0;
+
+      const faderName = document.getElementById('gap-fader-name');
+      const knobName = document.getElementById('gap-knob-name');
+
+      function updateCarousel(idx) {
+        prompts.forEach(p => p.classList.remove('active'));
+        prompts[idx].classList.add('active');
+
+        const state = states[idx];
+        fader.style.bottom = state.fader + '%';
+        knob.style.transform = `translateX(-50%) rotate(${state.knob}deg)`;
+        faderValue.textContent = state.fLabel;
+        knobValue.textContent = state.kLabel;
+        faderName.textContent = state.fName;
+        knobName.textContent = state.kName;
+      }
+
+      // Observe for visibility before starting
+      const gapObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            updateCarousel(0);
+            setInterval(() => {
+              current = (current + 1) % states.length;
+              updateCarousel(current);
+            }, 3000);
+            gapObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      const gapEl = document.getElementById('translation-gap');
+      if (gapEl) gapObserver.observe(gapEl);
+    })();
+  </script>
+</body>
+</html>
